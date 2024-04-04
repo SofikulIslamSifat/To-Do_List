@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do List Manager</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .todo-container {
+    max-width: 400px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  h2 {
+    text-align: center;
+    margin-top: 0;
+    color: #333;
+  }
+  input[type="text"] {
+    width: calc(100% - 70px);
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  button {
+    padding: 8px 20px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .todo-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .todo-checkbox {
+    margin-right: 10px;
+  }
+  .todo-item.complete span {
+    text-decoration: line-through;
+    color: #999;
+  }
+  .delete-btn {
+    margin-left: auto;
+    cursor: pointer;
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+  .delete-btn:hover {
+    background-color: #d32f2f;
+  }
+</style>
+</head>
+<body>
+<div class="todo-container">
+  <h2>To-Do List</h2>
+  <input type="text" id="taskInput" placeholder="Enter a new task">
+  <button onclick="addTask()">Add Task</button>
+  <ul id="taskList"></ul>
+</div>
+<script>
+  function addTask() {
+    var taskInput = document.getElementById("taskInput");
+    var taskText = taskInput.value.trim();
+    if (taskText !== "") {
+      var listItem = document.createElement("li");
+      listItem.className = "todo-item";
+      var checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "todo-checkbox";
+      checkbox.onclick = function() {
+        listItem.classList.toggle("complete");
+      };
+      var taskLabel = document.createElement("span");
+      taskLabel.textContent = taskText;
+      var deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.className = "delete-btn";
+      deleteButton.onclick = function() {
+        listItem.remove();
+      };
+      listItem.appendChild(checkbox);
+      listItem.appendChild(taskLabel);
+      listItem.appendChild(deleteButton);
+      document.getElementById("taskList").appendChild(listItem);
+      taskInput.value = "";
+    } else {
+      alert("Please enter a valid task!");
+    }
+  }
+
+  window.onload = function() {
+    var taskInput = document.getElementById("taskInput");
+    taskInput.addEventListener("keypress", function(event) {
+      if (event.keyCode === 13) {
+        addTask();
+      }
+    });
+  };
+</script>
+</body>
+</html>
